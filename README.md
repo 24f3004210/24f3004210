@@ -7,3 +7,6 @@
 ## main.css, base.html, signup.html and login.html created
 
 ## Milestone 2: All templates created
+
+## Milestone 3: All models created, Started working on app.py and controller.py
+## and doing routing for login and admin_dashboard page 
