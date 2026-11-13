@@ -10,3 +10,5 @@
 
 ## Milestone 3: All models created, Started working on app.py and controller.py
 ## and doing routing for login and admin_dashboard page 
+
+## Milestone 4: Instance created, content added to main.css, working on frontend and backend: login and signup completed
