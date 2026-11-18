@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block content %}
+<h2 class="center">Student Dashboard</h2><br>
+<table class="center">
+    <tr>
+        <td><a href="{{ url_for('student_dashboard') }}">Home</a></td><td>|</td>
+        <td><a href="{{ url_for('signout') }}">Logout</a></td>
+    </tr>
+</table>
+
+<hr>
+
+<p class="center err">{{ err_msg or "" }}</p>
+
+<table class="center" border="1">
+    <caption>Available Slots</caption>
+    <tr><th>Id</th><th>Exam Id</th><th>Date</th><th>Start time</th><th>End time</th><th>Action</th></tr>
+    {% for slot in Slots %}
+    <tr>
+        <td>{{ slot.slot_id }}</td>
+        <td>{{ slot.exam_id }}</td>
+        <td>{{ slot.slot_date }}</td>
+        <td>{{ slot.start_time }}</td>
+        <td>{{ slot.end_time }}</td>
+        <td><a href="/book?slot_id={{ slot.slot_id }}" class="btn-link btn-done">Book</a></td>
+    </tr>
+    {% else %}
+    <tr><td colspan="6">No Slots found</td></tr>
+    {% endfor %}
+</table>
+
+<br>
+
+<table class="center" border="1">
+    <caption>My Bookings</caption>
+    <tr><th>Id</th><th>Exam Id</th><th>Date</th><th>Start time</th><th>End time</th><th>Status</th><th>Marks</th><th>Remarks</th><th>Action</th></tr>
+
+    {% for booking in Bookings %}
+    <tr>
+        <td>{{ booking.booking_id }}</td>
+        <td>{{ booking.slot.exam_id }}</td>
+        <td>{{ booking.slot.slot_date }}</td>
+        <td>{{ booking.slot.start_time }}</td>
+        <td>{{ booking.slot.end_time }}</td>
+        <td>{{ booking.status }}</td>
+        <td>{% if booking.total_marks is not none %}{{ booking.total_marks }}{% endif %}</td>
+        <td>{{ booking.remarks or "" }}</td>
+        <td>{% if booking.status == "Booked" and booking.slot.slot_date >= today %}<a href="/cancel?booking_id={{ booking.booking_id }}" class="btn-link btn-danger">Cancel</a>{% endif %}</td>
+    </tr>
+    {% else %}
+    <tr><td colspan="9">No Bookings found</td></tr>
+    {% endfor %}
+</table>
+
+{% endblock %}

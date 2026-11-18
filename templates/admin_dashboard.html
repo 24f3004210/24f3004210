@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+{% block content %}
+<h2 class="center">Admin Dashboard</h2><br>
+<table class="center">
+    <tr>
+        <td><a href="{{ url_for('admin_dashboard') }}">Home</a></td><td>|</td>
+        <td><a href="{{ url_for('admin_dashboard') }}#courses">Courses</a></td><td>|</td>
+        <td><a href="{{ url_for('admin_dashboard') }}"#examinations>Examinations</a></td><td>|</td>
+        <td><a href="{{ url_for('admin_dashboard') }}"#slots>Slots</a></td><td>|</td>
+        <td><a href="{{ url_for('admin_dashboard') }}"#bookings>Bookings</a></td><td>|</td>
+        <td><a href="{{ url_for('signout') }}">Logout</a></td>
+    </tr>
+</table>
+
+<hr>
+
+<p class="center err">{{ err_msg or "" }}</p>
+
+<table class="center" border="1" id="courses">
+    <caption>Courses</caption>
+    <tr><th>Id</th><th>Course code</th><th>Name</th><th>Status</th><th colspan="2">Action</th></tr>
+    {% for course in Courses %}
+    <tr>
+        <td>{{ course.course_id }}</td>
+        <td>{{ course.course_code }}</td>
+        <td>{{ course.course_name }}</td>
+        <td>{{ course.status }}</td>
+        <td><a href="/course?id={{ course.course_id }}" class="btn-link btn-done">Edit</a></td>
+        <td><a href="/delete_course?id={{ course.course_id }}" class="btn-link btn-danger">Delete</a></td>
+    </tr>
+    {% else %}
+    <tr><td colspan="5">No Courses found</td></tr>
+    {% endfor %}
+    <p><a href="{{ url_for('course') }}" class="btn-link btn-done center">+ New Course</a></p>
+</table>
+
+<br>
+
+<table class="center" border="1" id = "examinations">
+    <caption>Examinations</caption>
+    <tr><th>Id</th><th>Course ID</th><th>Name</th><th>Type</th><th>Duration</th><th>Max marks</th><th colspan="2">Action</th></tr>
+
+    {% for exam in Examinations %}
+    <tr>
+        <td>{{ exam.exam_id }}</td>
+        <td>{{ exam.course_id }}</td>
+        <td>{{ exam.name }}</td>
+        <td>{{ exam.exam_type }}</td>
+        <td>{{ exam.duration }}</td>
+        <td>{{ exam.max_marks }}</td>
+        <td><a href="/exam?id={{ exam.exam_id }}" class="btn-link btn-done">Edit</a></td>
+        <td><a href="/delete_exam?id={{ exam.exam_id }}" class="btn-link btn-danger">Delete</a></td>
+    </tr>
+    {% else %}
+    <tr><td colspan="5">No Examinations found</td></tr>
+    {% endfor %}
+    <p><a href="{{ url_for('examination') }}" class="btn-link btn-done center">+ New Exam</a></p>
+</table>
+
+<br>
+
+<table class="center" border="1">
+    <caption>Examiners</caption>
+    <tr><th>Id</th><th>Name</th><th>Contact details</th><th>Department</th><th>Status</th><th>Action</th></tr>
+
+    {% for examiner in Examiners %}
+        {% if examiner.role == "Examiner" %}
+        <tr>
+            <td>{{ examiner.id }}</td>
+            <td>{{ examiner.full_name }}</td>
+            <td>{{ examiner.phone }}</td>
+            <td>{{ examiner.department }}</td>
+            <td>{{ examiner.status }}</td>
+            <td><a href="/v_e?id={{examiner.id}}" class="btn-link btn-done">View</a></td>
+        </tr>
+        {% endif %}
+    {% else %}
+    <tr><td colspan="5">No Examiners found</td></tr>
+    {% endfor %}
+</table>
+
+<br>
+
+<table class="center" border="1" id="slots">
+    <caption>Slots</caption>
+    <tr><th>Id</th><th>Exam Id</th><th>Examiner</th><th>Date</th><th>Start time</th><th>End time</th><th>Booked</th><th>Status</th></tr>
+    {% for slot in Slots %}
+    <tr>
+        <td>{{ slot.slot_id }}</td>
+        <td>{{ slot.exam_id }}</td>
+        <td>{{ slot.examiner.full_name }}</td>
+        <td>{{ slot.slot_date }}</td>
+        <td>{{ slot.start_time }}</td>
+        <td>{{ slot.end_time }}</td>
+        <td>{{ slot.booked() }} / {{ slot.capacity }}</td>
+        <td>{{ slot.status }}</td>
+    </tr>
+    {% else %}
+    <tr><td colspan="8">No Slots found</td></tr>
+    {% endfor %}
+</table>
+
+<br>
+
+<table class="center" border="1" id="bookings">
+    <caption>Bookings</caption>
+    <tr><th>Id</th><th>Student</th><th>Slot Id</th><th>Status</th><th>Marks</th></tr>
+    {% for booking in Bookings %}
+    <tr>
+        <td>{{ booking.booking_id }}</td>
+        <td>{{ booking.student.full_name }}</td>
+        <td>{{ booking.slot_id }}</td>
+        <td>{{ booking.status }}</td>
+        <td>{% if booking.total_marks is not none %}{{ booking.total_marks }}{% endif %}</td>
+    </tr>
+    {% else %}
+    <tr><td colspan="5">No Bookings found</td></tr>
+    {% endfor %}
+</table>
+
+
+{% endblock %}

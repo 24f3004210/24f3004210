@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+<form action="/register" method="POST">
+    <h2 class="center">Register new user</h2><br>
+    <table class="center">
+        <tr><td><input type="email" name="Email" placeholder="Email" required></td></tr>
+        <tr><td><input type="password" name="Password" placeholder="Password" required></td></tr>
+        <tr><td><input type="text" name="f_name" placeholder="Full Name" required></td></tr>
+        <tr><td>
+            <select id="user_type" name="user_type">
+                <option value="None" disabled selected>--User Type--</option>
+                <option value="Examiner">Examiner</option>
+                <option value="Student">Student</option>
+            </select>
+        </td></tr>
+        <tr><td><input type="tel" name="phone" placeholder="Phone Number" required></td></tr>
+        <tr><td><input type="text" name="Department" placeholder="Department" required></td></tr>
+        <tr><td><input type="submit" value="Register"></td></tr>
+        <tr><td class="err">{{ err_msg }}</td></tr>
+        <tr><td>Already have an account? <a href="{{ url_for('signin')}}">Login here</a></td></tr>
+    </table>
+    
+</form>    
+
+    
+
+
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %} 
+
+<h2 class="center">Registered Students</h2>
+<br>
+<p class="center err">{{ err_msg or "" }}</p>
+
+<table class="center" border="1">
+    <caption>Exam Id {{ slot.exam_id }} | {{ slot.slot_date }} | {{ slot.start_time }} - {{ slot.end_time }} | Max marks {{ slot.examination.max_marks }}</caption>
+    <tr><th>Booking Id</th><th>Student Id</th><th>Name</th><th>Marks and Remarks</th></tr>
+    {% for booking in Bookings %}
+    <tr>
+        <td>{{ booking.booking_id }}</td>
+        <td>{{ booking.student_id }}</td>
+        <td>{{ booking.student.full_name }}</td>
+        <td>
+            <form action="/r_s" method="POST">
+                <input type="hidden" name="booking_id" value="{{ booking.booking_id }}">
+                <input type="number" name="marks" value="{{ booking.total_marks }}" min="0" max="{{ slot.examination.max_marks }}" placeholder="Marks" required>
+                <input type="text" name="remarks" value="{{ booking.remarks or '' }}" placeholder="Remarks">
+                <input type="submit" value="Save">
+            </form>
+        </td>
+    </tr>
+    {% else %}
+    <tr><td colspan="4">No Students found</td></tr>
+    {% endfor %}
+</table>
+<p class="center"><a href="{{ url_for('examiner_dashboard') }}">Back to Dashboard</a></p>
+
+
+
+{% endblock %}

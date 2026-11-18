@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %} 
+
+<form action="{{ url_for('create_edit_slots') }}" method="POST">
+    <h2 class="center">Create/Edit Slots</h2>
+    <input type="hidden" name="id" value="{{ slot.slot_id }}">
+    <table class="center">
+        <tr><td><label>Exam Id: </label></td><td><input type="text" name="exam_id" value="{{ exam_id or '' }}" placeholder="Exam Id" required></td></tr>
+        <tr><td><label>Date: </label></td><td><input type="date" name="date" value="{{ slot.slot_date }}" placeholder="Date" required></td></tr>
+        <tr><td><label>Start time: </label></td><td><input type="time" name="start_time" value="{% if slot %}{{ slot.start_time.strftime('%H:%M') }}{% endif %}" placeholder="Start Time" required></td></tr>
+        <tr><td><label>End time: </label></td><td><input type="time" name="end_time" value="{% if slot %}{{ slot.end_time.strftime('%H:%M') }}{% endif %}" placeholder="End Time" required></td></tr>
+        <tr><td><label>Capacity: </label></td><td><input type="number" name="capacity" value="{{ slot.capacity }}" min="1" placeholder="Capacity" required></td></tr>
+        <tr><td><label>Status: </label></td><td><select name="status" required>
+            <option value="None" disabled {% if not slot %}selected{% endif %}>Not Selected</option>
+            <option value="Approve" {% if slot.status == "Approve" %}selected{% endif %}>Approve</option>
+            <option value="Reject" {% if slot.status == "Reject" %}selected{% endif %}>Reject</option>
+        </select></td></tr>
+        <tr><td><input type="submit" value="Update"></td><td><a href="{{ url_for('examiner_dashboard') }}" class="btn-link btn-danger">Cancel</a></td></tr>
+        <tr><td colspan="2" class="err">{{ err_msg }}</td></tr>
+    </table>
+    <p class="center"><a href="{{ url_for('examiner_dashboard') }}">Back to Dashboard</a></p>
+</form>
+
+
+
+{% endblock %}

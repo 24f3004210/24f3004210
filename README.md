@@ -16,3 +16,5 @@
 ## Milestone 5: working on controller part for some html templates
 
 ## Milestone 6: Controller part mostly completed. some tables deleted and ER Diagram revised.
+
+## Milestone 6: report completed, all routes completed, demo video created.

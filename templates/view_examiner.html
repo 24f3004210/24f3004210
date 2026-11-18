@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %} 
+
+<form action="/u_e" method="POST">
+    <h2 class="center">View Examiner</h2>
+    <table class="center">
+        <tr><td><label>Id: </label></td><td><input type="text" name="id" value="{{ examiner.id }}" readonly></td></tr>
+        <tr><td><label>Name: </label></td><td><input type="text" name="Name" value="{{ examiner.full_name }}" required></td></tr>
+        <tr><td><label>Contact details: </label></td><td><input type="phone" name="contact_details" value="{{ examiner.phone }}" placeholder="contact details" required></td></tr>
+        <tr><td><label>Department: </label></td><td><input type="text" name="department" value="{{ examiner.department }}" placeholder="department" required></td></tr>
+        <tr><td><label>Status: </label></td><td><select name="status" required>
+            <option value="None" disabled {% if examiner.status == "Pending" %}selected{% endif %}>Not Selected</option>
+            <option value="Approve" {% if examiner.status == "Approve" %}selected{% endif %}>Approve</option>
+            <option value="Reject" {% if examiner.status == "Reject" %}selected{% endif %}>Reject</option>
+        </select></td></tr>
+        <tr><td><input type="submit" value="Update"></td><td><a href="{{ url_for('admin_dashboard') }}" class="btn-link btn-danger">Cancel</a></td></tr>
+        <tr><td colspan="2" class="err">{{ err_msg }}</td></tr>
+    </table>
+    <p class="center"><a href="{{ url_for('admin_dashboard') }}">Back to Dashboard</a></p>
+</form>
+
+{% endblock %}
