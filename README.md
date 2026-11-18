@@ -14,3 +14,5 @@
 ## Milestone 4: Instance created, content added to main.css, working on frontend and backend: login and signup completed
 
 ## Milestone 5: working on controller part for some html templates
+
+## Milestone 6: Controller part mostly completed. some tables deleted and ER Diagram revised.
